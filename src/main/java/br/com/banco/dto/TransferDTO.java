@@ -13,5 +13,5 @@ public class TransferDTO {
     private Float value;
     private TransferType type;
     private String operatorName;
-    private String accountId;
+    private Long accountId;
 }
