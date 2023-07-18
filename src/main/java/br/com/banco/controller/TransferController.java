@@ -6,10 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -22,7 +19,7 @@ public class TransferController {
     private final TransferService transferService;
 
     @GetMapping("/all")
-    public ResponseEntity<List<TransferDTO>> findAll(){
+    public ResponseEntity<List<TransferDTO>> findAll() {
         List<TransferDTO> list = transferService.findAll();
         return ResponseEntity.ok().body(list);
     }
@@ -39,6 +36,16 @@ public class TransferController {
     @GetMapping("/find")
     public ResponseEntity<Page<TransferDTO>> findByOperatorName(@RequestParam String name, Pageable pageable) {
         Page<TransferDTO> page = transferService.findByOperatorName(name, pageable);
+        return ResponseEntity.ok().body(page);
+    }
+
+    @GetMapping("/{operatorName}")
+    public ResponseEntity<Page<TransferDTO>> findByOperatorNameAndDateBetween(
+            @PathVariable String operatorName,
+            @RequestParam("startDate") String startDate,
+            @RequestParam("endDate") String endDate,
+            Pageable pageable) {
+        Page<TransferDTO> page = transferService.findByOperatorNameAndDateBetween(operatorName, startDate, endDate, pageable);
         return ResponseEntity.ok().body(page);
     }
 

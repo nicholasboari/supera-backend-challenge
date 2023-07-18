@@ -1,6 +1,7 @@
 package br.com.banco.service;
 
 import br.com.banco.dto.TransferDTO;
+import br.com.banco.model.Transfer;
 import br.com.banco.repository.TransferRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -22,7 +23,7 @@ public class TransferService {
     private final TransferRepository transferRepository;
     private final ModelMapper modelMapper;
 
-    public List<TransferDTO> findAll(){
+    public List<TransferDTO> findAll() {
         return transferRepository.findAll().stream().map(transfer -> modelMapper.map(transfer, TransferDTO.class)).toList();
     }
 
@@ -30,7 +31,7 @@ public class TransferService {
         return transferRepository.findByOperatorNameContaining(name, pageable).map(transfer -> modelMapper.map(transfer, TransferDTO.class));
     }
 
-    public Page<TransferDTO> findByDateBetween(String startDate, String endDate, Pageable pageable){
+    public Page<TransferDTO> findByDateBetween(String startDate, String endDate, Pageable pageable) {
         // captura o date fornecido pelo usuario e passa para LocalDate
         LocalDate parsedStartDate = LocalDate.parse(startDate, DateTimeFormatter.ISO_DATE);
         LocalDate parsedEndDate = LocalDate.parse(endDate, DateTimeFormatter.ISO_DATE);
@@ -40,5 +41,17 @@ public class TransferService {
         LocalDateTime endDateTime = LocalDateTime.of(parsedEndDate, LocalTime.MAX);
 
         return transferRepository.findByDateBetween(startDateTime, endDateTime, pageable).map(transfer -> modelMapper.map(transfer, TransferDTO.class));
+    }
+
+    public Page<TransferDTO> findByOperatorNameAndDateBetween(String operatorName, String startDate, String endDate, Pageable pageable) {
+        LocalDate parsedStartDate = LocalDate.parse(startDate, DateTimeFormatter.ISO_DATE);
+        LocalDate parsedEndDate = LocalDate.parse(endDate, DateTimeFormatter.ISO_DATE);
+
+        LocalDateTime startDateTime = LocalDateTime.of(parsedStartDate, LocalTime.MIN);
+        LocalDateTime endDateTime = LocalDateTime.of(parsedEndDate, LocalTime.MAX);
+
+        Page<Transfer> transferPage = transferRepository.findByOperatorNameAndDateBetween(operatorName, startDateTime, endDateTime, pageable);
+
+        return transferPage.map(transfer -> modelMapper.map(transfer, TransferDTO.class));
     }
 }
