@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 
 public interface TransferRepository extends JpaRepository<Transfer, Long> {
 
-    Page<Transfer> findByOperatorNameContaining(String name, Pageable pageable);
+    Page<Transfer> findByOperatorNameContainingIgnoreCase(String name, Pageable pageable);
 
     Page<Transfer> findByDateBetween(LocalDateTime date, LocalDateTime date2, Pageable pageable);
 

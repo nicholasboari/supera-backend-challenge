@@ -34,7 +34,7 @@ public class TransferController {
     }
 
     @GetMapping("/find")
-    public ResponseEntity<Page<TransferDTO>> findByOperatorName(@RequestParam String name, Pageable pageable) {
+    public ResponseEntity<Page<TransferDTO>> findByOperatorName(@RequestParam(name = "operatorName") String name, Pageable pageable) {
         Page<TransferDTO> page = transferService.findByOperatorName(name, pageable);
         return ResponseEntity.ok().body(page);
     }

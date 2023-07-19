@@ -47,7 +47,7 @@ class TransferServiceTest {
         when(modelMapper.map(any(Transfer.class), eq(TransferDTO.class))).thenReturn(transferDTO);
 
         when(transferRepository.findAll(any(PageRequest.class))).thenReturn(transferPage);
-        when(transferRepository.findByOperatorNameContaining(anyString(), any(PageRequest.class))).thenReturn(transferPage);
+        when(transferRepository.findByOperatorNameContainingIgnoreCase(anyString(), any(PageRequest.class))).thenReturn(transferPage);
         when(transferRepository.findByDateBetween(any(LocalDateTime.class), any(LocalDateTime.class), any(PageRequest.class))).thenReturn(transferPage);
         when(transferRepository.findByOperatorNameAndDateBetween(anyString(), any(LocalDateTime.class), any(LocalDateTime.class), any(Pageable.class))).thenReturn(transferPage);
     }

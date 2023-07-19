@@ -27,7 +27,7 @@ public class TransferService {
     }
 
     public Page<TransferDTO> findByOperatorName(String name, Pageable pageable) {
-        return transferRepository.findByOperatorNameContaining(name, pageable).map(transfer -> modelMapper.map(transfer, TransferDTO.class));
+        return transferRepository.findByOperatorNameContainingIgnoreCase(name, pageable).map(transfer -> modelMapper.map(transfer, TransferDTO.class));
     }
 
     public Page<TransferDTO> findByDateBetween(String startDate, String endDate, Pageable pageable) {
