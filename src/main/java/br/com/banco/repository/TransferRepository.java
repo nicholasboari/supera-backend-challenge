@@ -15,6 +15,6 @@ public interface TransferRepository extends JpaRepository<Transfer, Long> {
 
     Page<Transfer> findByDateBetween(LocalDateTime date, LocalDateTime date2, Pageable pageable);
 
-    @Query("SELECT t FROM Transfer t WHERE t.operatorName LIKE %:name% AND t.date BETWEEN :startDate AND :endDate")
+    @Query("SELECT t FROM Transfer t WHERE UPPER(t.operatorName) LIKE UPPER(concat('%', :name, '%')) AND t.date BETWEEN :startDate AND :endDate")
     Page<Transfer> findByOperatorNameAndDateBetween(String name, LocalDateTime startDate, LocalDateTime endDate, Pageable pageable);
 }
