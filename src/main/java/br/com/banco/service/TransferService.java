@@ -13,7 +13,6 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.util.List;
 
 
 @RequiredArgsConstructor
@@ -23,8 +22,8 @@ public class TransferService {
     private final TransferRepository transferRepository;
     private final ModelMapper modelMapper;
 
-    public List<TransferDTO> findAll() {
-        return transferRepository.findAll().stream().map(transfer -> modelMapper.map(transfer, TransferDTO.class)).toList();
+    public Page<TransferDTO> findAll(Pageable pageable) {
+        return transferRepository.findAll(pageable).map(transfer -> modelMapper.map(transfer, TransferDTO.class));
     }
 
     public Page<TransferDTO> findByOperatorName(String name, Pageable pageable) {

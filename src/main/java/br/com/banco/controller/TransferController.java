@@ -19,8 +19,8 @@ public class TransferController {
     private final TransferService transferService;
 
     @GetMapping("/all")
-    public ResponseEntity<List<TransferDTO>> findAll() {
-        List<TransferDTO> list = transferService.findAll();
+    public ResponseEntity<Page<TransferDTO>> findAll(Pageable pageable) {
+        Page<TransferDTO> list = transferService.findAll(pageable);
         return ResponseEntity.ok().body(list);
     }
 

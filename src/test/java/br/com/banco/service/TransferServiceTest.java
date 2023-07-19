@@ -46,7 +46,7 @@ class TransferServiceTest {
         // Definir o comportamento do ModelMapper
         when(modelMapper.map(any(Transfer.class), eq(TransferDTO.class))).thenReturn(transferDTO);
 
-        when(transferRepository.findAll()).thenReturn(List.of(transfer));
+        when(transferRepository.findAll(any(PageRequest.class))).thenReturn(transferPage);
         when(transferRepository.findByOperatorNameContaining(anyString(), any(PageRequest.class))).thenReturn(transferPage);
         when(transferRepository.findByDateBetween(any(LocalDateTime.class), any(LocalDateTime.class), any(PageRequest.class))).thenReturn(transferPage);
         when(transferRepository.findByOperatorNameAndDateBetween(anyString(), any(LocalDateTime.class), any(LocalDateTime.class), any(Pageable.class))).thenReturn(transferPage);
@@ -54,13 +54,13 @@ class TransferServiceTest {
 
 
     @Test
-    @DisplayName("findAll return a list of TransferDTO")
+    @DisplayName("findAll return a page of TransferDTO")
     void testFindAll() {
-        List<TransferDTO> list = transferService.findAll();
+        Page<TransferDTO> page = transferService.findAll(PageRequest.of(1,1));
 
-        Assertions.assertFalse(list.isEmpty());
-        Assertions.assertNotNull(list);
-        Assertions.assertEquals(1, list.size());
+        Assertions.assertFalse(page.isEmpty());
+        Assertions.assertNotNull(page);
+        Assertions.assertEquals(1, page.getTotalElements());
     }
 
     @Test
