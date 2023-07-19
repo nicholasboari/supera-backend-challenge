@@ -1,3 +1,10 @@
+## Documentação
+
+[Como executar a aplicação](#como-executar-a-aplicação)
+
+Para acessar a documentação:
+http://localhost:8080/swagger-ui/index.html
+
 # Processo Seletivo Java
 
 ## Descrição 
